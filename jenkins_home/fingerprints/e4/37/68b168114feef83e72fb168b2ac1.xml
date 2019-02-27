@@ -1,0 +1,13 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2019-02-26 19:42:44.317 UTC</timestamp>
+  <md5sum>e43768b168114feef83e72fb168b2ac1</md5sum>
+  <fileName>Credential id=git_cred name=silemilan/****** (git_cred)</fileName>
+  <usages>
+    <entry>
+      <string>test</string>
+      <ranges>1</ranges>
+    </entry>
+  </usages>
+  <facets/>
+</fingerprint>

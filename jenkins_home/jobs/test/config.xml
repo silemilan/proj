@@ -1,0 +1,38 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.31">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.TimerTrigger>
+          <spec></spec>
+        </hudson.triggers.TimerTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.63">
+    <script>node {
+    stage(&quot;SCM checkout&quot;){
+        git credentialsId: &apos;git_cred&apos;, url: &apos;https://github.com/silemilan/test.git&apos;
+    }
+
+    stage(&quot;Build docker image&quot;) {
+        sh &quot;docker-compose -f docker-compose-build.yml build&quot;
+    }
+
+    stage(&quot;Push docker image&quot;) {
+        withCredentials([string(credentialsId: &apos;dockerhub1&apos;, variable: &apos;dockerHubPass&apos;)]) {
+            sh &quot;docker login -u silemilan -p ${dockerHubPass}&quot;
+            
+        }
+        sh &quot;docker push silemilan/docker_image:${BUILD_TAG}&quot;
+    }
+    
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
